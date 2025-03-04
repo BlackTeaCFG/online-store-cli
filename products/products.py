@@ -47,9 +47,18 @@ class ProductCatalog:
             return True
         return False
     
-    def list_products(self):
-        """Get all products in the catalog"""
-        return list(self.products.values())
+    def list_products(self, sort_by='name'):
+        """Get all products in the catalog, sorted by the given attribute"""
+        products = list(self.products.values())
+        
+        if sort_by == 'name':
+            products.sort(key=lambda p: p.name)
+        elif sort_by == 'price':
+            products.sort(key=lambda p: p.price)
+        elif sort_by == 'quantity':
+            products.sort(key=lambda p: p.quantity)
+            
+        return products
     
     def search_products(self, keyword):
         """Search products by name or description"""
