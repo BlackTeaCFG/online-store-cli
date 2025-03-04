@@ -47,11 +47,30 @@ class ProductCatalog:
             return True
         return False
     
-    def list_products(self, in_stock_only=False):
-        """Get all products in the catalog, with option to show only in-stock items"""
+    def list_products(self, sort_by='name', in_stock_only=False):
+        """
+        Get all products in the catalog
+
+        Parameters:
+        - sort_by: 'name', 'price', or 'quantity'
+        - in_stock_only: if True, return only products with quantity > 0
+        """
+        # Get the products list
         if in_stock_only:
-            return [p for p in self.products.values() if p.quantity > 0]
-        return list(self.products.values())
+            products = [p for p in self.products.values() if p.quantity > 0]
+        else:
+            products = list(self.products.values())
+
+        # Sort the products
+        if sort_by == 'name':
+            products.sort(key=lambda p: p.name)
+        elif sort_by == 'price':
+            products.sort(key=lambda p: p.price)
+        elif sort_by == 'quantity':
+            products.sort(key=lambda p: p.quantity)
+
+        return products
+
     
     def search_products(self, keyword):
         """Search products by name or description"""
